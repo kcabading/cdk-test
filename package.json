@@ -1,0 +1,25 @@
+{
+    "name": "my-cdk-app",
+    "version": "1.0.0",
+    "description": "AWS CDK application",
+    "main": "index.js",
+    "scripts": {
+      "build": "tsc",
+      "deploy": "cdk deploy",
+      "synth": "cdk synth"
+    },
+    "dependencies": {
+      "aws-cdk-lib": "2.174.1",
+      "constructs": "^10.0.0"
+    },
+    "devDependencies": {
+      "typescript": "^4.0.0",
+      "aws-cdk": "^2.0.0"
+    },
+    "engines": {
+      "node": ">=14.0.0"
+    },
+    "author": "",
+    "license": "ISC"
+  }
+  

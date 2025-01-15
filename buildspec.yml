@@ -47,9 +47,9 @@ phases:
       # Deploy the CloudFormation template using the AWS CLI
       # Deploy the stack using the `aws cloudformation deploy` command
       - echo Deploying CloudFormation template...
-      - aws cloudformation deploy \
+      - cdk deploy \
           --template-file $TEMPLATE_PATH \
-          --stack-name your-stack-name \
+          --stack-name GalaxyCdk2Stack \
           --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM  # Required if you are using IAM resources
 
 artifacts:
