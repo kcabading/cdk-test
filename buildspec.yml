@@ -8,10 +8,12 @@ env:
 phases:
   install:
     commands:
-      # Install Node.js (if not already available)
+      # Install Node.js (Amazon Linux 2 version)
       - echo Installing Node.js...
-      - curl -sL https://deb.nodesource.com/setup_20.x | sudo -E bash -  # You can choose your version
-      - sudo apt-get install -y nodejs
+      - curl -sL https://rpm.nodesource.com/setup_20.x | sudo bash -  # Setup Node.js 20.x (change version if needed)
+      - sudo yum install -y nodejs   # Use yum to install Node.js
+
+      # Verify Node.js installation
       - node --version
       - npm --version
 
