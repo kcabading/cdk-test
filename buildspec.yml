@@ -8,26 +8,35 @@ env:
 phases:
   install:
     commands:
-      # Install Python and pip
-      - echo Installing Python and pip...
-      - sudo yum install -y python3 python3-pip  # Install Python3 and pip
+      # Install Node.js and npm (required for the AWS CDK CLI)
+      - echo Installing Node.js and npm...
+      - curl -sL https://rpm.nodesource.com/setup_20.x | sudo bash -  # Setup Node.js 20.x (or your preferred version)
+      - sudo yum install -y nodejs   # Install Node.js using yum
+
+      # Verify Node.js and npm installation
+      - node --version
+      - npm --version
+
+      # Install AWS CDK globally using npm (necessary for `cdk` command)
+      - echo Installing AWS CDK...
+      - npm install -g aws-cdk
+
+      # Install Python 3 and pip
+      - echo Installing Python 3 and pip...
+      - sudo yum install -y python3 python3-pip
 
       # Verify Python and pip installation
       - python3 --version
       - pip3 --version
 
-      # Install AWS CDK for Python
-      - echo Installing AWS CDK...
-      - pip3 install aws-cdk-lib constructs
-
-      # Install project dependencies (if using Python)
-      - echo Installing project dependencies...
-      - pip3 install -r requirements.txt  # Assuming you have a requirements.txt for your Python dependencies
+      # Install AWS CDK dependencies (e.g., aws-cdk-lib, constructs)
+      - echo Installing Python project dependencies...
+      - pip3 install -r requirements.txt  # Assuming you have a requirements.txt for Python dependencies
 
   pre_build:
     commands:
-      # (Optional) Bootstrap the environment if this is the first deployment
-      # This step is necessary to set up resources like S3 bucket for assets
+      # Optional: Bootstrap the environment if this is the first deployment
+      # This step is necessary to set up resources like an S3 bucket for assets
       # Only needed once per region/account
       # - cdk bootstrap
 
@@ -38,7 +47,6 @@ phases:
       - cdk synth
 
       # Define the output CloudFormation template file from CDK synthesis
-      # The template will be in the cdk.out directory, typically with the name of your stack
       - TEMPLATE_PATH=cdk.out/GalaxyCdk2Stack.template.json  # Change this if your stack name is different
 
   post_build:
