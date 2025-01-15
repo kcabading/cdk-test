@@ -1,3 +1,56 @@
+version: 0.2
+
+env:
+  variables:
+    CDK_DEFAULT_REGION: "us-east-1"  # Specify the AWS region
+    CDK_OUTDIR: "cdk.out"            # The output directory for CDK generated CloudFormation templates
+
+phases:
+  install:
+    commands:
+      # Install Node.js (if not already available)
+      - echo Installing Node.js...
+      - curl -sL https://deb.nodesource.com/setup_20.x | sudo -E bash -  # You can choose your version
+      - sudo apt-get install -y nodejs
+      - node --version
+      - npm --version
+
+      # Install AWS CDK globally
+      - echo Installing AWS CDK...
+      - npm install -g aws-cdk
+
+      # Install project dependencies (if using Node.js)
+      - echo Installing project dependencies...
+      - npm install
+
+  pre_build:
+    commands:
+      # (Optional) Bootstrap the environment if this is the first deployment
+      # This step is necessary to set up resources like S3 bucket for assets
+      # Only needed once per region/account
+      # - cdk bootstrap
+
+  build:
+    commands:
+      # Synthesizing the CloudFormation template from the AWS CDK code
+      - echo Synthesizing CloudFormation template using AWS CDK...
+      - cdk synth
+
+      # Define the output CloudFormation template file from CDK synthesis
+      # The template will be in the cdk.out directory, typically with the name of your stack
+      - TEMPLATE_PATH=cdk.out/GalaxyCdk2Stack.template.json  # Change this if your stack name is different
+
+  post_build:
+    commands:
+      # Deploy the CloudFormation template using the AWS CLI
+      # Deploy the stack using the `aws cloudformation deploy` command
+      - echo Deploying CloudFormation template...
+      - aws cloudformation deploy \
+          --template-file $TEMPLATE_PATH \
+          --stack-name your-stack-name \
+          --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM  # Required if you are using IAM resources
+
 artifacts:
   files:
     - '**/*'
+  discard-paths: yes
