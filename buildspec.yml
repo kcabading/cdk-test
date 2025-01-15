@@ -8,22 +8,21 @@ env:
 phases:
   install:
     commands:
-      # Install Node.js (Amazon Linux 2 version)
-      - echo Installing Node.js...
-      - curl -sL https://rpm.nodesource.com/setup_20.x | sudo bash -  # Setup Node.js 20.x (change version if needed)
-      - sudo yum install -y nodejs   # Use yum to install Node.js
+      # Install Python and pip
+      - echo Installing Python and pip...
+      - sudo yum install -y python3 python3-pip  # Install Python3 and pip
 
-      # Verify Node.js installation
-      - node --version
-      - npm --version
+      # Verify Python and pip installation
+      - python3 --version
+      - pip3 --version
 
-      # Install AWS CDK globally
+      # Install AWS CDK for Python
       - echo Installing AWS CDK...
-      - npm install -g aws-cdk
+      - pip3 install aws-cdk-lib constructs
 
-      # Install project dependencies (if using Node.js)
+      # Install project dependencies (if using Python)
       - echo Installing project dependencies...
-      - npm install
+      - pip3 install -r requirements.txt  # Assuming you have a requirements.txt for your Python dependencies
 
   pre_build:
     commands:
