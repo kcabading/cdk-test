@@ -15,5 +15,5 @@ class GalaxyCdk2Stack(Stack):
         # example resource
         queue = sqs.Queue(
             self, "GalaxyCdk2Queue",
-            visibility_timeout=Duration.seconds(400),
+            visibility_timeout=Duration.seconds(100),
         )
