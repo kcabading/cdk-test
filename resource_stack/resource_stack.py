@@ -27,5 +27,5 @@ class ResourceStack(Stack):
                                             handler="account_inventory.lambda_handler")
 
         bucket = s3.Bucket(self, "MyfirstBucket", versioned=True,
-                           bucket_name="account-inventory-bucket-1225",
+                           bucket_name="account-inventory-bucket-123456",
                            block_public_access=s3.BlockPublicAccess.BLOCK_ALL)
