@@ -3,11 +3,11 @@ import os
 
 import aws_cdk as cdk
 
-from galaxy_cdk2.galaxy_cdk2_stack import GalaxyCdk2Stack
+from aws_codepipeline.aws_codepipeline_stack import AwsCodepipelineStack
 
 
 app = cdk.App()
-GalaxyCdk2Stack(app, "GalaxyCdk2Stack",
+AwsCodepipelineStack(app, "AwsCodepipelineStack",
     # If you don't specify 'env', this stack will be environment-agnostic.
     # Account/Region-dependent features and context lookups will not work,
     # but a single synthesized template can be deployed anywhere.
@@ -21,8 +21,13 @@ GalaxyCdk2Stack(app, "GalaxyCdk2Stack",
     # want to deploy the stack to. */
 
     env=cdk.Environment(account='193365704239', region='us-east-1'),
+    stack_name='github-codepipeline-stack'
 
     # For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html
     )
 
+cdk.Tags.of(app).add(key='feature',value='resource_stack')
+cdk.Tags.of(app).add(key='contact',value='kcabading2@dxc.com')
+cdk.Tags.of(app).add(key='team',value='galaxy')
 app.synth()
+
