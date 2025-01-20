@@ -5,8 +5,12 @@ from aws_cdk import (
     Stage,
     Environment,
     pipelines,
-    aws_codepipeline as codepipeline
+    aws_codepipeline as codepipeline,
+    aws_codepipeline_actions as cp_actions
 )
+
+from aws_cdk.pipelines import ManualApprovalStep
+
 from constructs import Construct
 from resource_stack.resource_stack import ResourceStack
 
@@ -15,7 +19,6 @@ class DeployStage(Stage):
     def __init__(self, scope: Construct, id: str, env: Environment, **kwargs) -> None:
         super().__init__(scope, id, env=env, **kwargs)
         ResourceStack(self, 'ResourceStack', env=env, stack_name="resource-stack-deploy")
-
 
 class AwsCodepipelineStack(Stack):
 
@@ -54,7 +57,21 @@ class AwsCodepipelineStack(Stack):
 
         deployment_wave = pipeline.add_wave("DeploymentWave")
 
+
+        # in dev
+        # deployment_wave.add_stage(DeployStage(
+        #     self, 'DeployStage',
+        #     env=(Environment(account='193365704239', region='us-east-1'))
+        # ))
+
+        # in prod
         deployment_wave.add_stage(DeployStage(
             self, 'DeployStage',
             env=(Environment(account='193365704239', region='us-east-1'))
-        ))
+        ),
+            pre = [ManualApprovalStep('PromoteToProduction')]
+        )
+        
+
+
+        
