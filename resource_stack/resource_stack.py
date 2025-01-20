@@ -15,7 +15,7 @@ class ResourceStack(Stack):
 
         queue = sqs.Queue(
             self, "GalaxyCodePipelineappQueue",
-            visibility_timeout=Duration.seconds(300),
+            visibility_timeout=Duration.seconds(500),
             queue_name="galaxy_queue"
         )
 
