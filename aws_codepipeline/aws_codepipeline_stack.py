@@ -57,7 +57,6 @@ class AwsCodepipelineStack(Stack):
 
         deployment_wave = pipeline.add_wave("DeploymentWave")
 
-
         # in dev
         # deployment_wave.add_stage(DeployStage(
         #     self, 'DeployStage',
