@@ -34,12 +34,13 @@ class ResourceStack(Stack):
         api = apigateway.LambdaRestApi(
             self,
             "HelloWorldApi",
-            handler = account_inventory_function
+            handler = account_inventory_function,
+            proxy = False,
         )
         
         # Define the '/hello' resource with a GET method
-        # hello_resource = api.root.add_resource("hello")
-        # hello_resource.add_method("GET")
+        hello_resource = api.root.add_resource("hello")
+        hello_resource.add_method("GET")
 
 
         bucket = s3.Bucket(self, "MyfirstBucket", versioned=True,
