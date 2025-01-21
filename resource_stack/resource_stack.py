@@ -27,19 +27,19 @@ class ResourceStack(Stack):
                                             function_name="codepipeline_lambda",
                                             runtime=function_lambda.Runtime.PYTHON_3_9,
                                             code=function_lambda.Code.from_asset('./lambda'),
-                                            handler="account_inventory.lambda_handler")
+                                            handler="account_inventory.lambda_handler",
+                                            timeout=Duration.seconds(5)),
         
         # Define the API Gateway resource
         api = apigateway.LambdaRestApi(
             self,
             "HelloWorldApi",
-            handler = account_inventory_function,
-            proxy = False,
+            handler = account_inventory_function
         )
         
         # Define the '/hello' resource with a GET method
-        hello_resource = api.root.add_resource("hello")
-        hello_resource.add_method("GET")
+        # hello_resource = api.root.add_resource("hello")
+        # hello_resource.add_method("GET")
 
 
         bucket = s3.Bucket(self, "MyfirstBucket", versioned=True,
