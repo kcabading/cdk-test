@@ -43,7 +43,7 @@ class AwsCodepipelineStack(Stack):
                 'pip install -r requirements.txt'
             ],
             commands=[
-                'npx cdk synth'
+                'npx aws-cdk synth'
             ],
             input=git_input
         )
