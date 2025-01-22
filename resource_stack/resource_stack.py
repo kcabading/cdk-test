@@ -40,7 +40,6 @@ class ResourceStack(Stack):
         # hello_resource = api.root.add_resource("hello")
         # hello_resource.add_method("GET")
 
-
-        bucket = _s3.Bucket(self, "MyfirstBucket", versioned=True,
-                           bucket_name="account-inventory-bucket-123456",
-                           block_public_access=_s3.BlockPublicAccess.BLOCK_ALL)
+        # bucket = _s3.Bucket(self, "MyfirstBucket", versioned=True,
+        #                    bucket_name="account-inventory-bucket-123456",
+        #                    block_public_access=_s3.BlockPublicAccess.BLOCK_ALL)
