@@ -5,12 +5,10 @@ from aws_cdk import (
     Stage,
     Environment,
     pipelines,
-    aws_codepipeline as codepipeline,
-    aws_codepipeline_actions as cp_actions
+    aws_codepipeline as codepipeline
 )
 
 from aws_cdk.pipelines import ManualApprovalStep
-
 from constructs import Construct
 from resource_stack.resource_stack import ResourceStack
 
@@ -43,7 +41,7 @@ class AwsCodepipelineStack(Stack):
                 'pip install -r requirements.txt'
             ],
             commands=[
-                'npx aws-cdk synth'
+                'npx cdk synth'
             ],
             input=git_input
         )
@@ -56,21 +54,8 @@ class AwsCodepipelineStack(Stack):
         )
 
         deployment_wave = pipeline.add_wave("DeploymentWave")
-
-        # in dev
-        # deployment_wave.add_stage(DeployStage(
-        #     self, 'DeployStage',
-        #     env=(Environment(account='193365704239', region='us-east-1'))
-        # ))
-
-        # in prod
+        
         deployment_wave.add_stage(DeployStage(
             self, 'DeployStage',
             env=(Environment(account='193365704239', region='us-east-1'))
-        ),
-            pre = [ManualApprovalStep('PromoteToProduction')]
-        )
-        
-
-
-        
+        ), pre = [ManualApprovalStep('PromoteToProduction')])
